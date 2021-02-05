@@ -1,0 +1,288 @@
+{
+    "schema_name": "pipeline_graph",
+    "schema_version": "1.0.0",
+    "data": {
+        "module_nodes": {
+            "7670efe5": {
+                "node_id": "7670efe5",
+                "name": "prefittedsoftvotingregressor",
+                "status": "model"
+            },
+            "62ba8967": {
+                "node_id": "62ba8967",
+                "name": "Numeric",
+                "status": "dataType"
+            },
+            "ed6b0be6": {
+                "node_id": "ed6b0be6",
+                "name": "MedianImputer",
+                "status": "operation"
+            },
+            "5514924c": {
+                "node_id": "5514924c",
+                "name": "ImputationMarker",
+                "status": "operation"
+            },
+            "3c2a0d2d": {
+                "node_id": "3c2a0d2d",
+                "name": "minRollingWindow",
+                "status": "operation"
+            },
+            "5a7b8e89": {
+                "node_id": "5a7b8e89",
+                "name": "maxRollingWindow",
+                "status": "operation"
+            },
+            "7bffcdf1": {
+                "node_id": "7bffcdf1",
+                "name": "meanRollingWindow",
+                "status": "operation"
+            },
+            "4aa49db9": {
+                "node_id": "4aa49db9",
+                "name": "DateTime",
+                "status": "dataType"
+            },
+            "005a4518": {
+                "node_id": "005a4518",
+                "name": "MaxHorizonFeaturizer",
+                "status": "operation"
+            },
+            "82620e2e": {
+                "node_id": "82620e2e",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "e20a99f3": {
+                "node_id": "e20a99f3",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "c6b5be9c": {
+                "node_id": "c6b5be9c",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "4ad13c25": {
+                "node_id": "4ad13c25",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "3b5dfc3c": {
+                "node_id": "3b5dfc3c",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "eb792a89": {
+                "node_id": "eb792a89",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "3ac22042": {
+                "node_id": "3ac22042",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "6e565f39": {
+                "node_id": "6e565f39",
+                "name": "DateTimeTransformer",
+                "status": "operation"
+            },
+            "e79d45e8": {
+                "node_id": "e79d45e8",
+                "name": "Ignore",
+                "status": "dataType"
+            },
+            "c5f3d620": {
+                "node_id": "c5f3d620",
+                "name": "GrainMarker-LabelEncoder",
+                "status": "operation"
+            }
+        },
+        "edges": [
+            {
+                "source_node_id": "d80715e4",
+                "source_node_name": "data_source",
+                "source_name": "",
+                "target_name": "65 col",
+                "dst_node_id": "62ba8967",
+                "dst_node_name": "Numeric"
+            },
+            {
+                "source_node_id": "62ba8967",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "ed6b0be6",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "5514924c",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "3 col",
+                "dst_node_id": "7670efe5",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "ed6b0be6",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "5514924c",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "62ba8967",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "3c2a0d2d",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "3c2a0d2d",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "5a7b8e89",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "7bffcdf1",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "3 col",
+                "dst_node_id": "7670efe5",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "5a7b8e89",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "7bffcdf1",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "d80715e4",
+                "source_node_name": "data_source",
+                "source_name": "",
+                "target_name": "1 col",
+                "dst_node_id": "4aa49db9",
+                "dst_node_name": "DateTime"
+            },
+            {
+                "source_node_id": "4aa49db9",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "005a4518",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "005a4518",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "82620e2e",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "82620e2e",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "e20a99f3",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "e20a99f3",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "c6b5be9c",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "c6b5be9c",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "4ad13c25",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "4ad13c25",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "3b5dfc3c",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "3b5dfc3c",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "eb792a89",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "eb792a89",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "3ac22042",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "6e565f39",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "9 col",
+                "dst_node_id": "7670efe5",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "3ac22042",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "6e565f39",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "d80715e4",
+                "source_node_name": "data_source",
+                "source_name": "",
+                "target_name": "1 col",
+                "dst_node_id": "e79d45e8",
+                "dst_node_name": "Ignore"
+            },
+            {
+                "source_node_id": "e79d45e8",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "c5f3d620",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "c5f3d620",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "1 col",
+                "dst_node_id": "7670efe5",
+                "dst_node_name": ""
+            }
+        ],
+        "child_runs": [],
+        "datasource_nodes": {
+            "d80715e4": {
+                "node_id": "d80715e4",
+                "name": "data_source - 67 col"
+            }
+        }
+    }
+}

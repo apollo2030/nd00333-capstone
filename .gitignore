@@ -1,0 +1,7 @@
+*.log
+azureml/
+.azureml/
+__pycache__/
+.vscode/
+*.sqlite
+/.vs/ProjectSettings.json
