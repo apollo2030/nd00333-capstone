@@ -3420,3 +3420,47 @@ Traceback:
 
 ExceptionTarget: Unspecified
 2021-02-05 13:59:55.761 - WARNING - 18048 - azureml.train.automl._azureautomlclient._validate_input:680 - Validation service meet exceptions, continue training now.
+2021-02-05 14:31:02.498 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.timeseries_transformer._logger_wrapper:81 - Starting transform operation of TimeSeriesTransformer.
+2021-02-05 14:31:02.561 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.missingdummies_transformer._logger_wrapper:81 - Starting transform operation of MissingDummiesTransformer.
+2021-02-05 14:31:02.601 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.missingdummies_transformer._logger_wrapper:81 - MissingDummiesTransformer transform operation complete.
+2021-02-05 14:31:02.601 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_series_imputer._logger_wrapper:98 - Starting transform operation of TimeSeriesImputer.
+2021-02-05 14:31:02.656 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_series_imputer._logger_wrapper:98 - TimeSeriesImputer transform operation complete.
+2021-02-05 14:31:02.657 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.short_grain_dropper._logger_wrapper:98 - Starting transform operation of ShortGrainDropper.
+2021-02-05 14:31:02.662 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.short_grain_dropper._logger_wrapper:98 - ShortGrainDropper transform operation complete.
+2021-02-05 14:31:02.662 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.restore_dtypes_transformer._logger_wrapper:81 - Starting transform operation of RestoreDtypesTransformer.
+2021-02-05 14:31:02.679 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.restore_dtypes_transformer._logger_wrapper:81 - RestoreDtypesTransformer transform operation complete.
+2021-02-05 14:31:02.680 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.max_horizon_featurizer._logger_wrapper:98 - Starting transform operation of MaxHorizonFeaturizer.
+2021-02-05 14:31:02.745 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.max_horizon_featurizer._logger_wrapper:98 - MaxHorizonFeaturizer transform operation complete.
+2021-02-05 14:31:02.745 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.rolling_window._logger_wrapper:98 - Starting transform operation of RollingWindow.
+2021-02-05 14:31:08.520 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.rolling_window._logger_wrapper:98 - RollingWindow transform operation complete.
+2021-02-05 14:31:08.520 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.grain_index_featurizer._logger_wrapper:98 - Starting transform operation of GrainIndexFeaturizer.
+2021-02-05 14:31:08.522 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.grain_index_featurizer._logger_wrapper:98 - GrainIndexFeaturizer transform operation complete.
+2021-02-05 14:31:08.522 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.numericalize_transformer._logger_wrapper:81 - Starting transform operation of NumericalizeTransformer.
+2021-02-05 14:31:08.525 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.numericalize_transformer._logger_wrapper:81 - NumericalizeTransformer transform operation complete.
+2021-02-05 14:31:08.525 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_index_featurizer._logger_wrapper:98 - Starting transform operation of TimeIndexFeaturizer.
+2021-02-05 14:31:08.554 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_index_featurizer._logger_wrapper:98 - TimeIndexFeaturizer transform operation complete.
+2021-02-05 14:31:08.555 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.category_binarizer._logger_wrapper:98 - Starting transform operation of CategoryBinarizer.
+2021-02-05 14:31:08.555 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.category_binarizer._logger_wrapper:98 - CategoryBinarizer transform operation complete.
+2021-02-05 14:31:08.564 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.timeseries_transformer._logger_wrapper:81 - TimeSeriesTransformer transform operation complete.
+2021-02-05 14:31:08.608 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.timeseries_transformer._logger_wrapper:81 - Starting transform operation of TimeSeriesTransformer.
+2021-02-05 14:31:08.658 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.missingdummies_transformer._logger_wrapper:81 - Starting transform operation of MissingDummiesTransformer.
+2021-02-05 14:31:08.698 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.missingdummies_transformer._logger_wrapper:81 - MissingDummiesTransformer transform operation complete.
+2021-02-05 14:31:08.698 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_series_imputer._logger_wrapper:98 - Starting transform operation of TimeSeriesImputer.
+2021-02-05 14:31:08.754 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_series_imputer._logger_wrapper:98 - TimeSeriesImputer transform operation complete.
+2021-02-05 14:31:08.754 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.short_grain_dropper._logger_wrapper:98 - Starting transform operation of ShortGrainDropper.
+2021-02-05 14:31:08.759 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.short_grain_dropper._logger_wrapper:98 - ShortGrainDropper transform operation complete.
+2021-02-05 14:31:08.759 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.restore_dtypes_transformer._logger_wrapper:81 - Starting transform operation of RestoreDtypesTransformer.
+2021-02-05 14:31:08.775 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.restore_dtypes_transformer._logger_wrapper:81 - RestoreDtypesTransformer transform operation complete.
+2021-02-05 14:31:08.776 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.max_horizon_featurizer._logger_wrapper:98 - Starting transform operation of MaxHorizonFeaturizer.
+2021-02-05 14:31:08.831 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.max_horizon_featurizer._logger_wrapper:98 - MaxHorizonFeaturizer transform operation complete.
+2021-02-05 14:31:08.831 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.rolling_window._logger_wrapper:98 - Starting transform operation of RollingWindow.
+2021-02-05 14:31:14.618 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.rolling_window._logger_wrapper:98 - RollingWindow transform operation complete.
+2021-02-05 14:31:14.618 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.grain_index_featurizer._logger_wrapper:98 - Starting transform operation of GrainIndexFeaturizer.
+2021-02-05 14:31:14.620 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.grain_index_featurizer._logger_wrapper:98 - GrainIndexFeaturizer transform operation complete.
+2021-02-05 14:31:14.620 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.numericalize_transformer._logger_wrapper:81 - Starting transform operation of NumericalizeTransformer.
+2021-02-05 14:31:14.631 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.numericalize_transformer._logger_wrapper:81 - NumericalizeTransformer transform operation complete.
+2021-02-05 14:31:14.631 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_index_featurizer._logger_wrapper:98 - Starting transform operation of TimeIndexFeaturizer.
+2021-02-05 14:31:14.651 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.time_index_featurizer._logger_wrapper:98 - TimeIndexFeaturizer transform operation complete.
+2021-02-05 14:31:14.651 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.category_binarizer._logger_wrapper:98 - Starting transform operation of CategoryBinarizer.
+2021-02-05 14:31:14.651 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.category_binarizer._logger_wrapper:98 - CategoryBinarizer transform operation complete.
+2021-02-05 14:31:14.661 - INFO - 18048 - azureml.automl.runtime.featurizer.transformer.timeseries.timeseries_transformer._logger_wrapper:81 - TimeSeriesTransformer transform operation complete.
