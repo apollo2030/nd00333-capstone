@@ -1,7 +1,3 @@
-# The script MUST contain a function named azureml_main
-# which is the entry point for this module.
-
-# imports up here can be used to
 import pandas as pd
 import datetime
 
@@ -37,23 +33,35 @@ def azureml_main(dataframe1 = None, dataframe2 = None):
     # transpose back the result
     merged_measures_per_week = pd \
     .concat(measures_per_week.array, axis=1) \
-    .fillna(value=False) \
+    .apply(lambda x: x.abs().fillna(0) if x.dtype.kind in 'iufc' else x.fillna(False)) \
     .T.groupby(level=0).any().T 
+
+    merged_measures_per_week.index.set_names(['country', 'week'], inplace=True)
 
     deaths_per_week = dataframe2 \
     .drop(columns=['country_code','source']) \
     .rename(columns={'year_week':'week'}) \
     .set_index(['indicator','continent','country', 'week']) \
-    .loc[('deaths','Europe')]
+    .loc[('cases','Europe')]
+
+    deaths_per_week.index.set_names(['country', 'week'], inplace=True)
 
     result = deaths_per_week \
     .join(merged_measures_per_week) \
     .apply(lambda x: x.abs().fillna(0) if x.dtype.kind in 'iufc' else x.fillna(False)) \
     .sort_index()
 
-    result.reset_index(level=['country', 'week'])
-    result.drop(columns=['weekly_count','population','cumulative_count'])
-
+    result=result.reset_index(level=['country', 'week'])
+    result=result.drop(columns=['weekly_count','population','cumulative_count'])
+    result.week = pd.to_datetime(result.week+'-0',format='%Y-%W-%w')
+    
+    # forecasting doesnt work well with duplicate timestamps
+    # cleaning up the duplicate values by a multiindex
+    # then reset the index
+    result = result.set_index(['country','week'])
+    result = result[~result.index.duplicated(keep='first')]
+    result = result.drop(index='the Holy See/ Vatican City State')
+    result=result.reset_index(level=['country', 'week'])
     # If a zip file is connected to the third input port,
     # it is unzipped under "./Script Bundle". This directory is added
     # to sys.path. Therefore, if your zip file contains a Python file
