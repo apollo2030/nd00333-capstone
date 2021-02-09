@@ -20,7 +20,7 @@ df = dataset.to_pandas_dataframe()
 
 ## Automated ML
 To setup the automated ml run i used the forecasting task with the corresponding configuration.
-The pipeline gave out the best model. One of the difficulties is the fact that in jupyter notebooks in vs code the intellisense is flanky - it works well for python files but not so for notebooks. Documentation is also not the best possible - for instance the forecasting_parameters parameter for the  AutoMlConfig is not documented. 
+The pipeline gave out the best model. One of the difficulties is the fact that in jupyter notebooks in vs code the intellisense is flaky - it works well for python files but not so for notebooks. Documentation is also not the best possible - for instance the forecasting_parameters parameter for the AutoMlConfig is not documented. 
 
 # ForecastingParameters Configuration
 
@@ -47,8 +47,6 @@ We will block the following models:
  
 To do that we set `blocked_models` to `['ExtremeRandomTrees', 'AutoArima', 'Prophet']`.   
 We have already limited the run duration of our experiment to 20 minute so we will disable early stopping like this: `enable_early_stopping=False`
-
-*TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
 
 ### Results
 

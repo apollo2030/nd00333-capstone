@@ -2,3 +2,4 @@
 azureml/
 .azureml/
 __pycache__/
+.vscode/
