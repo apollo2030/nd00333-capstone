@@ -53,9 +53,11 @@ We have already limited the run duration of our experiment to 20 minute so we wi
 
 ### Results
 
-*TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
+Running automl pipeline for this task turned out to produce the best forecasting model. I think that the data related to the measures alone are not enough, I would try to estimate the sizes of public gatherings where the social distancing is not possible and map them onto the timeline. I would also take into account an engineered feature that would show the susceptibility to viruses based on the season. 
 
-*TODO* Remember to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+#### Run details
+![Automl Run Details](pictures/aml_run_details.png)
+
 
 ## Hyperparameter Tuning
 
@@ -63,13 +65,13 @@ In hyperdrive tuning I needed to develop the training script for it to be fed wi
 
 The bulk of work is in preparing the data and adjusting the parameters inherent to the forecasting task like the forecasting horizon, number of datapoints in the past to take into account, the number of tests samples. The pipeline consists of a horizon transformer a ReversibleImputer an AutoregressiveTransformer a ReversibleImputer and a MultiOutputRegressor with a LinearRegression as the regressor.
 
-The parameters used in this pipeline are:
-'--param_horizon' - the forecasting horizon and is an integer - in the hyperparameter run it has a range from 1 to 36 as the dataset slice has 57 data points and the test_size can be from 10 to 20 thus - 57 - 20 = 36. 
-'--param_datapoints_in_past_as_features' - the number of past y data points to transform in features for the linear regression. It also depends on the size of the data slice and has a range of 1 to 36.
-'--param_test_size' - the absolute size of the test set. It is a choice from 10 and 20.
-'--param_n_jobs' - the number of jobs to use to parallelize the evaluation.
-'--param_n_estimators' - in case of XGBoost regressor - use this value for the number of estimators to use.
-'--save' - is a flag to let the script save the model.
+The parameters used in this pipeline are:  
+`--param_horizon` - the forecasting horizon and is an integer - in the hyperparameter run it has a range from 1 to 36 as the dataset slice has 57 data points and the test_size can be from 10 to 20 thus - 57 - 20 = 36.  
+`--param_datapoints_in_past_as_features` - the number of past y data points to transform in features for the linear regression. It also depends on the size of the data slice and has a range of 1 to 36.  
+`--param_test_size` - the absolute size of the test set. It is a choice from 10 and 20.  
+`--param_n_jobs` - the number of jobs to use to parallelize the evaluation.  
+`--param_n_estimators` - in case of XGBoost regressor - use this value for the number of estimators to use.  
+`--save` - is a flag to let the script save the model.  
 
 I used the RandomSampler and quniform expression to have a linear search space for the most of the parameters.
 
