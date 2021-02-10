@@ -1,7 +1,12 @@
 
 # Covid-19 cases forecasting
 
-The project intends to build a model that can predict the number of infection cases of Covid-19 based on the selection of measures that are applied in that country. It uses data from the european disease center so the model is applicable for countries in Europe.
+The project intends to build a model that can predict the number of infection cases of Covid-19 based on the selection of measures that are applied in that country.   
+It uses data from the european disease center so the model is applicable for countries in Europe. The project is developed using Automl and 
+Hyperdrive experiments available in Azure ML Studio.  
+The idea behind the approach is to let Automl train a bunch of models and select the best one based on the accuracy metric (r2_score in this case), then design a Hyperdrive run script and let it optimize the parameters so we get a set of hyperparameters that are optimal for our pipeline.   
+After training and selecting the best models from the 2 runs - we will deploy the one that performs the best as a webservice. 
+The project also demonstrates how to consume the endpoint. 
 
 ## Dataset
 
@@ -53,7 +58,7 @@ We have already limited the run duration of our experiment to 20 minute so we wi
 
 ### Results
 
-Running automl pipeline for this task turned out to produce the best forecasting model. I think that the data related to the measures alone are not enough, I would try to estimate the sizes of public gatherings where the social distancing is not possible and map them onto the timeline. I would also take into account an engineered feature that would show the susceptibility to viruses based on the season. 
+Running the Automl pipeline for this task turned out to produce the best forecasting model. I think that the data related to the measures alone are not enough, I would try to estimate the sizes of public gatherings where the social distancing is not possible and map them onto the timeline. I would also take into account an engineered feature that would show the susceptibility to viruses based on the season. 
 
 #### Run details
 ![Automl Run Details](pictures/aml_run_details.png)
@@ -92,5 +97,213 @@ I chose the Bandit stopping policy because it offers a way to account for local 
 ## Model Deployment
 I chose to deploy the automl trained model because the accuracy is way better.
 
+### Inference configuration
+To incorporate the model in a webservice we need to provide the glue code that will translate the request into the format that can be understood by the model. In this case I didnt need to start from scratch as the best model run has also an output folder that contains the `scoring_file_v_1_0_0.py`. there were some changes that needed to be made to get the service running:
+
+Replace this part:
+```python
+    y_query = None
+    if 'y_query' in data.columns:
+        y_query = data.pop('y_query').values
+    result = model.forecast(data, y_query)
+```
+with this part:
+```python
+    y_query = None
+    if 'y_query' in data.columns:
+        y_query = data.pop('y_query').values
+    else:
+        y_query = np.full(len(data.index), np.NaN)
+        
+    result = model.forecast(data, y_query, ignore_data_errors=True)
+```
+### Deployment configuration
+To deploy the service I used the Azure Container Services as this option needs the least ammount of management and resource provisioning.  
+The deployment configuration looks like this:
+```python
+deployment_config = AciWebservice.deploy_configuration(
+    cpu_cores = 1, 
+    memory_gb = 1,
+    auth_enabled = True, 
+    enable_app_insights = True, 
+    tags = {'category':'training', 'trait':'ML'})
+```
+`auth_enabled` is used to make the service authenticated - so every user has to have a key to access the service.  
+`enable_app_insights` will create an application insights resource and add useful logging.  
+`tags` the values here are used for various purposes - in our case for resource categorization.  
+
+### Consuming the service 
+
+Services deployed by Azure Ml have a very handy documentation endpoint - the swagger.json file that describes the way the service needs to be consumed.
+
+The simplest way to consume the service is by posting an authenticated request to the `/score` endpoint:
+```python
+import requests
+import json
+
+data = {"data":
+    [
+        {
+            "country": "Netherlands",
+            "week": "2021-02-07T00:00:00",
+            "AdaptationOfWorkplace": "false",
+            "AdaptationOfWorkplacePartial": "false",
+            "BanOnAllEvents": "false",
+            "BanOnAllEventsPartial": "false",
+            "ClosDaycare": "false",
+            "ClosDaycarePartial": "false",
+            "ClosHigh": "false",
+            "ClosHighPartial": "false",
+            "ClosPrim": "false",
+            "ClosPrimPartial": "false",
+            "ClosPubAny": "false",
+            "ClosPubAnyPartial": "false",
+            "ClosSec": "false",
+            "ClosSecPartial": "false",
+            "ClosureOfPublicTransport": "false",
+            "ClosureOfPublicTransportPartial": "false",
+            "EntertainmentVenues": "false",
+            "EntertainmentVenuesPartial": "false",
+            "GymsSportsCentres": "false",
+            "GymsSportsCentresPartial": "false",
+            "HotelsOtherAccommodation": "false",
+            "HotelsOtherAccommodationPartial": "false",
+            "IndoorOver100": "false",
+            "IndoorOver1000": "false",
+            "IndoorOver50": "false",
+            "IndoorOver500": "false",
+            "MasksMandatoryAllSpaces": "false",
+            "MasksMandatoryAllSpacesPartial": "false",
+            "MasksMandatoryClosedSpaces": "false",
+            "MasksMandatoryClosedSpacesPartial": "false",
+            "MasksVoluntaryAllSpaces": "false",
+            "MasksVoluntaryAllSpacesPartial": "false",
+            "MasksVoluntaryClosedSpaces": "false",
+            "MasksVoluntaryClosedSpacesPartial": "false",
+            "MassGather50": "false",
+            "MassGather50Partial": "false",
+            "MassGatherAll": "false",
+            "MassGatherAllPartial": "false",
+            "NonEssentialShops": "false",
+            "NonEssentialShopsPartial": "false",
+            "OutdoorOver100": "false",
+            "OutdoorOver1000": "false",
+            "OutdoorOver50": "false",
+            "OutdoorOver500": "false",
+            "PlaceOfWorship": "false",
+            "PlaceOfWorshipPartial": "false",
+            "PrivateGatheringRestrictions": "false",
+            "PrivateGatheringRestrictionsPartial": "false",
+            "RegionalStayHomeOrder": "false",
+            "RegionalStayHomeOrderPartial": "false",
+            "RestaurantsCafes": "false",
+            "RestaurantsCafesPartial": "false",
+            "SocialCircle": "false",
+            "SocialCirclePartial": "false",
+            "StayHomeGen": "false",
+            "StayHomeGenPartial": "false",
+            "StayHomeOrder": "false",
+            "StayHomeOrderPartial": "false",
+            "StayHomeRiskG": "false",
+            "StayHomeRiskGPartial": "false",
+            "Teleworking": "false",
+            "TeleworkingPartial": "false",
+            "WorkplaceClosures": "false",
+            "WorkplaceClosuresPartial": "false"
+        },
+        {
+            "country": "Netherlands",
+            "week": "2021-02-14T00:00:00",
+            "AdaptationOfWorkplace": "false",
+            "AdaptationOfWorkplacePartial": "false",
+            "BanOnAllEvents": "false",
+            "BanOnAllEventsPartial": "false",
+            "ClosDaycare": "false",
+            "ClosDaycarePartial": "false",
+            "ClosHigh": "false",
+            "ClosHighPartial": "false",
+            "ClosPrim": "false",
+            "ClosPrimPartial": "false",
+            "ClosPubAny": "false",
+            "ClosPubAnyPartial": "false",
+            "ClosSec": "false",
+            "ClosSecPartial": "false",
+            "ClosureOfPublicTransport": "false",
+            "ClosureOfPublicTransportPartial": "false",
+            "EntertainmentVenues": "false",
+            "EntertainmentVenuesPartial": "false",
+            "GymsSportsCentres": "false",
+            "GymsSportsCentresPartial": "false",
+            "HotelsOtherAccommodation": "false",
+            "HotelsOtherAccommodationPartial": "false",
+            "IndoorOver100": "false",
+            "IndoorOver1000": "false",
+            "IndoorOver50": "false",
+            "IndoorOver500": "false",
+            "MasksMandatoryAllSpaces": "false",
+            "MasksMandatoryAllSpacesPartial": "false",
+            "MasksMandatoryClosedSpaces": "false",
+            "MasksMandatoryClosedSpacesPartial": "false",
+            "MasksVoluntaryAllSpaces": "false",
+            "MasksVoluntaryAllSpacesPartial": "false",
+            "MasksVoluntaryClosedSpaces": "false",
+            "MasksVoluntaryClosedSpacesPartial": "false",
+            "MassGather50": "false",
+            "MassGather50Partial": "false",
+            "MassGatherAll": "false",
+            "MassGatherAllPartial": "false",
+            "NonEssentialShops": "false",
+            "NonEssentialShopsPartial": "false",
+            "OutdoorOver100": "false",
+            "OutdoorOver1000": "false",
+            "OutdoorOver50": "false",
+            "OutdoorOver500": "false",
+            "PlaceOfWorship": "false",
+            "PlaceOfWorshipPartial": "false",
+            "PrivateGatheringRestrictions": "false",
+            "PrivateGatheringRestrictionsPartial": "false",
+            "RegionalStayHomeOrder": "false",
+            "RegionalStayHomeOrderPartial": "false",
+            "RestaurantsCafes": "false",
+            "RestaurantsCafesPartial": "false",
+            "SocialCircle": "false",
+            "SocialCirclePartial": "false",
+            "StayHomeGen": "false",
+            "StayHomeGenPartial": "false",
+            "StayHomeOrder": "false",
+            "StayHomeOrderPartial": "false",
+            "StayHomeRiskG": "false",
+            "StayHomeRiskGPartial": "false",
+            "Teleworking": "false",
+            "TeleworkingPartial": "false",
+            "WorkplaceClosures": "false",
+            "WorkplaceClosuresPartial": "false"
+        }
+    ]
+}
+
+input_data = json.dumps(data)
+
+scoring_uri = service.scoring_uri
+key = <your service key>
+
+headers = {'Content-Type': 'application/json'}
+headers['Authorization'] = f'Bearer {key}'
+
+resp = requests.post(scoring_uri, input_data, headers=headers)
+print(resp.json())
+```
+### Obtaining the key
+Send some bitcoins to ...
+
+Just kidding 😃 ! - the endpoint in the azure ml studio has also all the keys needed to call the service - use either the **Primary key** or the **Secondary key**:
+![Getting the key](pictures\consuming.png) 
+
+## Future improvements
+Currently the project uses data about the measures that are very difficult to normalize across the countries - some of the measures although sound the same are implemented differently. Finding a way to normalize the measure will improve the accuracy.
+
+At this point the vaccination is started in a number of countries which will affect the number of cases - would be nice to take that into account.
+
+
 ## Screen Recording
-The screencast of using the model can be found here: [Consuming a Trained Azure Auto ML Model](https://www.youtube.com/watch?v=jHTRUcPORj4)
+The screencast of using the model can be found here: [Consuming a Trained Azure Auto ML Model](https://youtu.be/ZQYQsjtbz1k)
