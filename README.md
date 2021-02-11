@@ -297,7 +297,7 @@ print(resp.json())
 Send some bitcoins to ...
 
 Just kidding 😃 ! - the endpoint in the azure ml studio has also all the keys needed to call the service - use either the **Primary key** or the **Secondary key**:
-![Getting the key](pictures\consuming.png) 
+![Getting the key](pictures/consuming.png) 
 
 ## Future improvements
 Currently the project uses data about the measures that are very difficult to normalize across the countries - some of the measures although sound the same are implemented differently. Finding a way to normalize the measure will improve the accuracy.
